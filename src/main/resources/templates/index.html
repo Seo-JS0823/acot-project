@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="/css/reset.css">
+	<link rel="stylesheet" href="/css/color.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>나만의 가계부</title>
+<style>
+#login-container {
+	width: var(--100);
+	height: var(--100);
+	background-color: var(--snow);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.login-form {
+	width: 50%;
+	min-width: 80rem;
+	height: 50%;
+	min-height: 40rem;
+	border-radius: 15px;
+	box-shadow: var(--b-box10);
+	display: flex;
+	flex-direction: column;
+}
+.login-header {
+	width: 100%;
+	height: 5rem;
+	background-color: var(--blue);
+	border-top-left-radius: 15px;
+	border-top-right-radius: 15px;
+}
+.login-header p {
+	font-size: 2rem;
+	color: white;
+	text-shadow: var(--w-box3);
+}
+.login-main {
+	width: 100%;
+	height: calc(100% - 5rem);
+	background-color: white;
+	border-bottom-left-radius: 15px;
+	border-bottom-right-radius: 15px;
+}
+.login-box:first-child {
+	width: 25rem;
+	height: 100%;
+	background-color: #1E90FFAA;
+	border-bottom-left-radius: 15px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+.login-box:first-child .logo {
+	width: 8rem;
+	height: 8rem;
+	background-image: linear-gradient(135deg, #402E7A, #4C3BCF, #4B70F5, #3DC2EC);
+	background-size: 120%;
+	background-position: center;
+	border-radius: 20%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	margin-bottom: 3rem;
+	margin-top: 3rem;
+	box-shadow: var(--b-box3);
+	transition: transform 0.5s ease,
+	            box-shadow 0.5s ease-in-out,
+	            border-radius 0.5s ease-in-out,
+	            width 0.5s ease-in-out,
+	            height 0.5s ease-in-out;
+}
+.login-box:first-child .logo p {
+	font-size: 1.8rem;
+	font-weight: 600;
+	color: white;
+	margin: 0;
+}
+.login-box:first-child .login-intro-bulit {
+	width: 100%;
+	height: 5rem;
+	margin-top: auto;
+}
+.login-box:first-child .login-intro-bulit div {
+	width: 2rem;
+	height: 2rem;
+	border-radius: 50%;
+	background-color: rgba(255, 255, 255, 0.3);
+	margin-left: 1rem;
+	margin-right: 1rem;
+	transition: background-color 0.2s ease;
+	box-shadow: 0 0 5px #FFF;
+	cursor: pointer;
+}
+.login-box:first-child .login-intro-bulit div:first-child {
+	background-color: rgba(255, 255, 255, 0.9);	
+}
+.login-box:first-child .login-intro-bulit div:hover {
+	background-color: rgba(255, 255, 255, 0.9);
+}
+.login-box:first-child .login-intro-text {
+	font-size: 1.5rem;
+	color: white;
+}
+.login-box:first-child .login-intro-text p {
+	text-align: center;
+}
+.login-box:first-child p {
+	font-size: 1.2rem;
+	margin-top: 0;
+	color: white;
+}
+.login-box:last-child {
+	width: calc(100% - 25rem);
+	height: 100%;
+}
+.login-in {
+	width: 70%;
+	height: 90%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+.login-in h1 {
+	font-size: 3rem;
+	font-weight: 900;
+}
+.in-box {
+	width: 100%;
+	height: 5rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-top: 1rem;
+}
+.in-box input[type=text], .in-box input[type=password] {
+	width: calc(100% - 12rem);
+	height: 100%;
+	font-size: 1.5rem;
+	padding-left: 1rem;
+	outline: none;
+	border: 1px solid rgba(33, 33, 33, 0.2);
+	border-radius: 10px;
+}
+.in-box input[type=submit] {
+	width: 70%;
+	height: 80%;
+	font-size: 1.5rem;
+	color: white;
+	border: none;
+	border-radius: 0.5rem;
+	background-color: var(--blue);
+	cursor: pointer;
+}
+.in-box:nth-of-type(3) input[type=submit] {
+	background-color: var(--blue);
+	&:hover {
+		transform: scale(1.01);
+	}
+}
+.in-box:nth-of-type(4) input[type=submit] {
+	background-color: var(--teal);
+	&:hover {
+		transform: scale(1.01);
+	}
+}
+</style>
+</head>
+<body>
+<div id="modal"></div>
+<div id="login-container">
+	<div class="login-form">
+		<div class="login-header row">
+			<p>주 부 성 &nbsp;&nbsp; 가 계 부</p>
+		</div>
+		<div class="login-main row">
+			<div class="login-box">
+				<div id="logo" class="logo"><p>A c o t</p></div>
+				<div class="login-intro-text">
+					<p id="intro-text">
+						내가 만든 내 세상이야!<br>
+						가라! 이 🐶 들아!
+					</p>
+				</div>
+				<div class="login-intro-bulit row">
+					<div class="bulit" data-over="true">&nbsp;</div>
+					<div class="bulit" data-over="false">&nbsp;</div>
+					<div class="bulit" data-over="false">&nbsp;</div>
+					<div class="bulit" data-over="false">&nbsp;</div>
+				</div>
+				<p>좌, 우 방향키를 눌러 확인하세요.</p>
+			</div>
+			<div class="login-box row">
+				<div class="login-in">
+					<h1>L o g i n</h1>
+					<div class="in-box">
+						<input id="email" type="text" name="email" placeholder="이메일 또는 아이디를 입력하세요."/>
+					</div>
+					<div class="in-box">
+						<input id="password" type="password" name="password" placeholder="비밀번호를 입력하세요."/>
+					</div>
+					<div class="in-box">
+						<input id="loginbtn" type="submit" value="로그인"/>
+					</div>
+					<div class="in-box">
+						<input id="joinbtn" type="submit" value="이메일 회원가입"/>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script src="/js/TagFactory-ver3.js"></script>
+<script>
+
+	const modal = new Modal('modals', true).setDefaultModalStyle()
+	                                     .getElement();
+	document.getElementById('modal').appendChild(modal);
+	
+
+	document.getElementById('loginbtn').addEventListener('click', (e) => {
+		const email = document.getElementById('email').value;
+		const password = document.getElementById('password').value;
+		const emailReg = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+		if(email === '') {
+			e.preventDefault();
+			modal.textContent = '이메일을 입력해주세요.';
+			new Modal('div').open(modal, 'flex', false);
+			setTimeout(() => new Modal('div').close(modal, false), 1000);
+			return;
+		}
+		if(!emailReg.test(email)) {
+			e.preventDefault();
+			modal.textContent = '올바른 이메일 형식으로 입력하세요.';
+			new Modal('div').open(modal, 'flex', false);
+			setTimeout(() => new Modal('div').close(modal, false), 1000);
+			return;
+		}
+		if(password === '') {
+			e.preventDefault();
+			modal.textContent = '비밀번호를 입력해라!';
+			new Modal('div').open(modal, 'flex', false);
+			setTimeout(() => new Modal('div').close(modal, false), 1000);
+			return;
+		}
+	});
+
+	setInterval(() => {
+		document.getElementById('logo').style.transform = 'translateY(-30%)'
+		document.getElementById('logo').style.boxShadow = '0 90px 30px rgba(33, 33, 33, 0.3)';
+		document.getElementById('logo').style.borderRadius = '50%';
+		document.getElementById('logo').style.width = '8rem';
+		document.getElementById('logo').style.height = '8rem';
+		setTimeout(() => {
+			document.getElementById('logo').style.transform = 'translateY(0%)';
+			document.getElementById('logo').style.boxShadow = '0 0 3px rgba(33, 33, 33, 0.5)';
+			document.getElementById('logo').style.borderRadius = '48%';
+		document.getElementById('logo').style.width = '8.5rem';
+		document.getElementById('logo').style.height = '7.5rem';
+		}, 500);
+	}, 1000);
+
+	document.getElementById('joinbtn').addEventListener('click', () => {
+		const form = document.createElement('form');
+		form.method = "GET";
+		form.action = "/view/join";
+		form.style.display = 'hidden';
+		document.body.appendChild(form);
+		form.submit();
+	});
+
+	document.addEventListener('keydown', (event) => {
+		let bulitEls = document.querySelectorAll('[class=bulit]');
+		if(event.key === 'ArrowRight') {
+			for(let i = 0; i < bulitEls.length; i++) {
+				if((i+1) === bulitEls.length) {
+					return;
+				}
+				if(bulitEls[i].getAttribute('data-over') === 'true') {
+					bulitEls[i+1].style.backgroundColor = 'rgba(255, 255, 255, 0.9)';
+					bulitEls[i+1].setAttribute('data-over', 'true');
+					bulitEls[i].setAttribute('data-over', 'false');
+					bulitEls[i].style.backgroundColor = 'rgba(255, 255, 255, 0.3)';
+					switchIntro(i+1);
+					return;
+				}
+			}
+		} else if(event.key === 'ArrowLeft') {
+			for(let i = 0; i < bulitEls.length; i++) {
+				if(bulitEls[i].getAttribute('data-over') === 'true') {
+					if(i === 0) {
+						return;
+					}
+					bulitEls[i-1].style.backgroundColor = 'rgba(255, 255, 255, 0.9)';
+					bulitEls[i].style.backgroundColor = 'rgba(255, 255, 255, 0.3)';
+					bulitEls[i-1].setAttribute('data-over', 'true');
+					bulitEls[i].setAttribute('data-over', 'false');
+					switchIntro(i-1);
+					return;
+				}
+			}
+		}
+	})
+	
+	function switchIntro(i) {
+		const texts = [
+			`모든 일에 감사합니다.`,
+			`감사합니다.`,
+			`금니빨 빼고...... 모조리 씹어먹어줄게.`,
+			`크와아아앙!`
+		]
+		const textEl = document.getElementById('intro-text');
+		textEl.innerHTML = texts[i];
+	}
+	
+</script>
+</body>
+</html>
