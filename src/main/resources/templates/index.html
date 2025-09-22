@@ -68,7 +68,6 @@
 	justify-content: center;
 	margin-bottom: 3rem;
 	margin-top: 3rem;
-	box-shadow: var(--b-box3);
 	transition: transform 0.5s ease,
 	            box-shadow 0.5s ease-in-out,
 	            border-radius 0.5s ease-in-out,
@@ -218,7 +217,7 @@
 </div>
 <script src="/js/TagFactory-ver3.js"></script>
 <script>
-
+	/*
 	const modal = new Modal('modals', true).setDefaultModalStyle()
 	                                     .getElement();
 	document.getElementById('modal').appendChild(modal);
@@ -250,7 +249,9 @@
 			return;
 		}
 	});
+	*/
 
+	/*
 	setInterval(() => {
 		document.getElementById('logo').style.transform = 'translateY(-30%)'
 		document.getElementById('logo').style.boxShadow = '0 90px 30px rgba(33, 33, 33, 0.3)';
@@ -265,7 +266,10 @@
 		document.getElementById('logo').style.height = '7.5rem';
 		}, 500);
 	}, 1000);
-
+	*/
+	
+	// 이거도 button 으로 서버 내 url 이동가능한 함수로 만들자.
+	// url + tag Id 받고 함수 만들면 될 듯
 	document.getElementById('joinbtn').addEventListener('click', () => {
 		const form = document.createElement('form');
 		form.method = "GET";
@@ -275,6 +279,7 @@
 		form.submit();
 	});
 
+	// 이거 나중에 알고리즘으로 클래스 만들어서 라이브러리로 만들자.
 	document.addEventListener('keydown', (event) => {
 		let bulitEls = document.querySelectorAll('[class=bulit]');
 		if(event.key === 'ArrowRight') {

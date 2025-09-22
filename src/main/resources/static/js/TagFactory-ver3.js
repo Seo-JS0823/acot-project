@@ -192,32 +192,30 @@ class TagEvent {
 class Modal {
    // 생성자에서 TagFactory의 div를 가져옴
    // 초기 생성자 상태에서 this.modal 의 타입은 TagFactory Type
-   constructor(className = '', flag) {
-      if(flag === true) {
-      	this.modal = this.#fragment(className);
-      } else {
-		this.modal = document.getElementById(className);
-	  }
+   constructor(className = '') {
+      this.modal = this.#fragment(className);
    }
-
+   
+   // Id 값으로 태그를 가져온다.
+   takeIdElement(id = '') {
+      if(id) {	
+         this.modal = document.getElementById(id);
+      }
+      return this;
+   }
+   
    // 모달용 태그를 받아서 오픈하는 함수
-   open(tag, display = '', flag) {
+   open(tag, display = '') {
       if(tag instanceof HTMLElement && flag === true) {
          tag.style.display = display;
-      } else if(tag instanceof HTMLElement && flag === false) {
-		tag.style.opacity = 1;
-		tag.style.visibility = 'visible';
-	  }
+      }
    }
 
    // 모달용 태그를 받아서 클로즈하는 함수
-   close(tag, flag) {
+   close(tag) {
       if(tag instanceof HTMLElement && flag === true) {
          tag.style.display = 'none';
-      } else if(tag instanceof HTMLElement && flag === false) {
-		 tag.style.opacity = 0;
-		 tag.style.visibility = 'hidden';
-	  }
+      }
    }
 
    // 키보드 누르는 모달 오픈 이벤트
@@ -327,23 +325,20 @@ class Modal {
 // 사용자 지정 스타일 추가 가능
 const ModalStyle = {
    // 디폴트 최상위 모달 스타일
-   defaultStyle() {
+   // time 은 transition 시간 세팅
+   defaultStyle(time) {
       const defaultStyle = {
          id:'parent-modal',
          style: {
-            display:'flex',
-            position:'fixed',
-            top:0,
-            width:'100%',
-            height:'100%',
-            fontSize: '5rem',
-            color:'white',
-            alignItems:'center',
-            justifyContent:'center',
-            transition:'opacity 1s ease, visibility 1s ease',
-            opacity: 0,
-            visibility: 'hidden',
-            backgroundColor:'rgba(0,0,0,0.5)'
+			display:'flex',
+			alignItems:'center',
+			justifyContent:'center',
+			width:'100%',
+			height:'100%',
+			opacity:0,
+			visibility:'hidden',
+			transition:ModalStyle.transitionTimeSetting(time),
+			backgroundColor:'rgba(33,33,33,0.2)'
          }
       };
       return defaultStyle;
@@ -353,5 +348,21 @@ const ModalStyle = {
       const customStyle = options || {};
       const baseStyle = ModalStyle.defaultStyle();
       return {...baseStyle, ...customStyle};
+   },
+   transitionTimeSetting(time) {
+      return `opacity ${time}s ease-in-out, visibility ${time}s ease-in-out, transform ${time}s ease-in-out`;
    }
+}
+
+/*
+여러 모달 알림 스타일 innerHTML 반환
+title:string      모달 제목
+content:string    내용
+button:boolean    버튼 존재하는지
+buttonText:string 버튼 내용 뭐로 할지
+*/
+const ModalHTML = {
+	cardModal(data = {}) {
+		
+	}
 }
